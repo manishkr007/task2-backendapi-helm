@@ -1,0 +1,25 @@
+# Helm chart dependencies and packaging
+charts/*.tgz
+*.tgz
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+*.tmp
+*.temp
+*.log
+
+requirements.lock
+Chart.lock

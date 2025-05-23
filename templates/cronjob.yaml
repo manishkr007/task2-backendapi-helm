@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "backend-api.fullname" . }}-cronjob
+  labels:
+    {{- include "backend-api.labels" . | nindent 4 }}
+spec:
+  schedule: "{{ .Values.cronJob.schedule }}"
+  successfulJobsHistoryLimit: {{ .Values.cronJob.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.cronJob.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "backend-api.labels" . | nindent 8 }}
+        spec:
+          containers:
+            - name: {{ .Chart.Name }}-cronjob
+              image: "{{ .Values.cronJob.image }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              args:
+                {{- toYaml .Values.cronJob.command | nindent 16 }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+          restartPolicy: OnFailure
